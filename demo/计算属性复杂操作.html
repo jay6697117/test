@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>计算属性复杂操作</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <h1>{{ totalPrice }}</h1>
+    </div>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          books: [
+            { id: 110, name: 'Unix编程艺术', price: 119 },
+            { id: 111, name: '代码大全', price: 105 },
+            { id: 112, name: '深入理解计算机原理', price: 98 },
+            { id: 113, name: '现代操作系统', price: 87 },
+            { id: 113, name: 'vue深入浅出', price: 91 }
+          ]
+        },
+        computed: {
+          totalPrice: function() {
+            const booksArr = this.books;
+            let totalPrice = 0;
+
+            //es5写法: forEach
+            // booksArr.forEach(function(item) {
+            //   totalPrice += item.price;
+            // });
+
+            //es6写法: forof
+            for (const item of booksArr) {
+              totalPrice += item.price;
+            }
+
+            return totalPrice;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

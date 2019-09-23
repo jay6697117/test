@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>demo</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak></div>
+    <script src="./lib/vue/dist/vue.js"></script>
+    <script>
+      const arr = [10, 333, 444, 555, 22, 55, 66, 777777];
+      const newArr = arr.filter(elem => {
+        return elem < 100;
+      });
+      const newArr1 = arr.filter(elem => {
+        return elem >= 100;
+      });
+      console.log('arr :', arr);
+      console.log('newArr :', newArr);
+      console.log('newArr1 :', newArr1);
+
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        //数据model
+        data: {},
+        //方法
+        methods: {},
+        //计算属性
+        computed: {},
+        //过滤器
+        filters: {}
+      });
+    </script>
+  </body>
+</html>

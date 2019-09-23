@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>v-on修饰符</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- 停止冒泡 -->
+      <div @click="divClick()" style="background-color: #ccc;">
+        <button @click.stop="btnClick()">点击按钮1</button>
+      </div>
+      <!-- 阻止默认事件 -->
+      <form action="https://www.baidu.com" method="GET">
+        <label>名字: <input v-model="username" type="text" name="username"/></label><br />
+        <label>密码: <input v-model="password" type="text" name="password"/></label><br />
+        <input type="submit" value="提交" @click.prevent="submitClick()" />
+      </form>
+
+      <!-- 监听键盘按某个键 -->
+      <div>按键盘:<input type="text" @keyup.enter="keyUp()" v-model="inputValue" /></div>
+      <!-- 事件只触发一次 -->
+      <div>
+        <!-- 触发无数次 -->
+        <button @click="btnClickOnce()">触发无数次</button>
+        <!-- 触发一次 -->
+        <button @click.once="btnClickOnce()">触发一次</button>
+      </div>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'hello world',
+          username: '',
+          password: '',
+          keyCounter: 0,
+          inputValue: ''
+        },
+        methods: {
+          btnClick() {
+            console.log('btnClick...');
+          },
+          divClick() {
+            console.log('divClick...');
+          },
+          submitClick() {
+            console.log('submitClick...');
+            console.log('名字:', this.username, ' | ', '密码:', this.password);
+          },
+          keyUp() {
+            this.keyCounter++;
+            console.log('keyUp...', ' | ', this.inputValue, ' | ', this.keyCounter);
+          },
+          btnClickOnce() {
+            this.keyCounter++;
+            console.log('btnClickOnce...', ' | ', this.keyCounter);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

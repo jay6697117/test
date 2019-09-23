@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>v-if, v-else-if and v-else</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <div>
+        <label>成绩: <input v-model.trim.lazy="score" type="text" placeholder="请输入成绩"/></label>
+      </div>
+      <div>{{ showRes }}</div>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          score: ''
+        },
+        computed: {
+          showRes() {
+            const _this = this;
+            let showMsg = '';
+            if (_this.score === '' || _this.score === undefined || _this.score === null) {
+              showMsg = '成绩为空';
+            } else {
+              if (_this.score > 100) {
+                showMsg = '分数不能超过100, 请重新输入!';
+              } else if (_this.score >= 90) {
+                showMsg = '优秀';
+              } else if (_this.score >= 80) {
+                showMsg = '良好';
+              } else if (_this.score >= 60) {
+                showMsg = '及格';
+              } else if (_this.score >= 0) {
+                showMsg = '不及格';
+              } else {
+                showMsg = '分数不能为小于0, 请重新输入!';
+              }
+            }
+            return showMsg;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

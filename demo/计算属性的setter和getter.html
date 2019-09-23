@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>计算属性的setter和getter</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <h1>{{ fullName }}</h1>
+    </div>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          firstName: 'Jinhui',
+          lastName: 'Zhang'
+        },
+        computed: {
+          fullName: {
+            // newValue是set方法的参数是传进来的新的计算属性值
+            set: function(newValue) {
+              console.log('计算属性set方法触发!');
+              const nameArr = newValue.split(', ');
+              this.lastName = nameArr[0];
+              this.firstName = nameArr[1];
+            },
+            get: function() {
+              console.log('计算属性get方法触发!');
+              return this.lastName + ', ' + this.firstName;
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

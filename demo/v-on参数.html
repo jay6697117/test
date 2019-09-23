@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>v-on参数</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <h1>{{ msg }}</h1>
+      <!-- 省略小括号 -->
+      <button @click="btn1">按钮1</button>
+      <!-- 正常情况 -->
+      <button @click="btn1()">按钮1</button>
+      <!-- 传入123 -->
+      <button @click="btn2('abc')">按钮2</button>
+      <!-- 传入undefined -->
+      <button @click="btn2()">按钮2</button>
+      <!-- vue默认传入event对象 -->
+      <button @click="btn2">按钮2</button>
+      <!-- 手动传入event对象: $event -->
+      <button @click="btn2($event)">按钮2</button>
+      <!-- 第一个参数默认传入event对象 -->
+      <button @click="btn3">按钮3</button>
+      <!-- 手动传入event对象: $event -->
+      <button @click="btn3('abc',$event)">按钮3</button>
+      <!-- 传入一个未定义的变量和手动传入event对象: $event -->
+      <button @click="btn3(abc,$event)">按钮3</button>
+      <!-- 传入一个data中定义的变量和手动传入event对象: $event -->
+      <button @click="btn3(msg,$event)">按钮3</button>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'msg'
+        },
+        methods: {
+          btn1() {
+            console.log('btn1 Click!');
+          },
+          btn2(param) {
+            console.log('btn2: ', param);
+          },
+          btn3(param, event) {
+            console.log('btn3: ', param, ' ---- ', event);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

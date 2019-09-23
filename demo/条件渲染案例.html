@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>条件渲染案例</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- 两个key相同就会复用反之不会复用 -->
+      <span v-if="loginType==='telNum'">
+        <label for="telNum">手机号码: </label>
+        <input id="telNum" type="text" key="tel-num" placeholder="输入手机号码" />
+      </span>
+      <!-- 两个key相同就会复用反之不会复用 -->
+      <span v-if="loginType==='emailAddr'">
+        <label for="emailAddr">邮箱地址: </label>
+        <input id="emailAddr" type="text" key="email-addr" placeholder="输入邮箱地址" />
+      </span>
+      <!-- 切换按钮 -->
+      <button @click="loginToggle()">切换类型</button>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          loginType: 'telNum'
+        },
+        methods: {
+          loginToggle() {
+            this.loginType = this.loginType === 'telNum' ? 'emailAddr' : 'telNum';
+          }
+        },
+        computed: {}
+      });
+    </script>
+  </body>
+</html>

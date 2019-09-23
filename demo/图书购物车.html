@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>图书购物车</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+      table {
+        margin: 0 auto;
+        margin-top: 60px;
+        border-collapse: collapse;
+        border-spacing: 0;
+        text-align: center;
+      }
+      tfoot {
+        font-weight: bolder;
+        font-size: 22px;
+      }
+      th {
+        background-color: #eee;
+      }
+      th,
+      td {
+        border: 1px solid #aaa;
+        padding: 10px 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <table>
+        <thead>
+          <tr>
+            <th style="padding:10px">
+              ID\类目
+            </th>
+            <th>书籍名称</th>
+            <th>出版日期</th>
+            <th>价格</th>
+            <th>购买数量</th>
+            <th style="padding:10px 20px">操作</th>
+          </tr>
+        </thead>
+        <tbody v-if="!isBooksNull">
+          <tr v-for="(item,index) in books">
+            <td style="padding:10px">{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.price | finalPrice }}</td>
+            <td style="vertical-align: middle;">
+              <button
+                style="padding:3px 8px;border-radius: 50%;background-color: #eee;border: 1px solid #aaa;outline: none;vertical-align: middle;"
+                :disabled="isBtnAbled(index)"
+                @click="sub(index)"
+              >
+                -
+              </button>
+              <span style="vertical-align: middle;padding: 0.5px 2px;">{{ item.num }}</span>
+              <button
+                style="padding:3px 6px;border-radius: 50%;background-color: #eee;border: 1px solid #aaa;outline: none;vertical-align: middle;"
+                @click="add(index)"
+              >
+                +
+              </button>
+            </td>
+            <td style="padding:10px 20px">
+              <button
+                style="padding:2px 5px;border-radius: 5px;background-color: #eee;border: 1px solid #aaa;outline: none;"
+                @click="removeItem(index)"
+              >
+                移除
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot v-if="!isBooksNull">
+          <tr>
+            <td colspan="6">总价: {{ totalPrice | finalPrice }}</td>
+          </tr>
+        </tfoot>
+        <tfoot v-else>
+          <tr>
+            <td colspan="6">购物车为空</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        //数据model
+        data: {
+          books: [
+            { id: 1, name: '算法导论', date: '2019-01', price: 85.0, num: 1 },
+            { id: 2, name: 'UNIX编程艺术', date: '2018-05', price: 68.0, num: 1 },
+            { id: 3, name: '编程珠玑', date: '2017-03', price: 49.0, num: 1 },
+            { id: 4, name: '代码大全', date: '2018-12', price: 98.0, num: 1 }
+          ]
+        },
+        //方法
+        methods: {
+          //减
+          sub(thisIndex) {
+            this.books[thisIndex].num -= 1;
+          },
+          //加
+          add(thisIndex) {
+            this.books[thisIndex].num += 1;
+          },
+          //启用/禁用button
+          isBtnAbled(thisIndex) {
+            if (this.books[thisIndex].num > 1) {
+              return false;
+            } else {
+              return true;
+            }
+          },
+          //操作移除书单item
+          removeItem(thisIndex) {
+            this.books.splice(thisIndex, 1);
+          }
+        },
+        //可以复用过滤器:把数字价格过滤成带人民币格式
+        filters: {
+          finalPrice(param) {
+            return '¥' + param.toFixed(2);
+          }
+        },
+        //计算属性
+        computed: {
+          //总价
+          totalPrice() {
+            let total = 0;
+            this.books.forEach(element => {
+              total += element.price * element.num;
+            });
+            return total;
+          },
+          //书单是否为空
+          isBooksNull() {
+            if (this.books.length === 0) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

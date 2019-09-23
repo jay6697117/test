@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>v-bind绑定style-数组语法</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <!-- 等同于 -->
+    <!-- <div id="app" v-cloak>
+      <div :style="[fontColor,fontSize,bgColor]">{{ msg }}</div>
+    </div> -->
+
+    <div id="app" v-cloak>
+      <div :style="getStyles()">{{ msg }}</div>
+    </div>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'hello world',
+          fontColor: { color: '#ff0000' },
+          fontSize: { 'font-size': '100px' },
+          bgColor: { 'background-color': '#00ccff' }
+        },
+        methods: {
+          getStyles: function() {
+            const styles = [];
+            styles.push(this.fontColor);
+            styles.push(this.fontSize);
+            styles.push(this.bgColor);
+            console.log(styles);
+            return styles;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

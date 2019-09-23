@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>数组数据响应式更新视图</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <ul>
+        <li v-for="item in letters" :key="item">{{ item }}</li>
+      </ul>
+      <button @click="btnClickPush()">Push按钮</button>
+      <button @click="btnClickUnshift()">Unshift按钮</button>
+      <button @click="btnClickPop()">Pop按钮</button>
+      <button @click="btnClickShift()">Shift按钮</button>
+      <button @click="btnClickSplice()">Splice按钮</button>
+      <button @click="btnClickSort()">Sort按钮</button>
+      <button @click="btnClickReverse()">Reverse按钮</button>
+      <button @click="btnClickChange()">Change按钮</button>
+      <button @click="btnClickVueSet()">VueSet按钮</button>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          // Model
+          letters: ['A', 'B', 'C', 'D'],
+          num: 0
+        },
+        methods: {
+          //响应式的
+          btnClickPush() {
+            this.num += 1;
+            this.letters.push('F' + this.num, 'G' + this.num);
+            console.log(this.letters);
+          },
+          btnClickUnshift() {
+            this.num += 1;
+            this.letters.unshift('H' + this.num, 'I' + this.num);
+            console.log(this.letters);
+          },
+          btnClickPop() {
+            this.letters.pop();
+            console.log(this.letters);
+          },
+          btnClickShift() {
+            this.letters.shift();
+            console.log(this.letters);
+          },
+          btnClickSplice() {
+            this.num += 1;
+            this.letters.splice(0, 1, 'E' + this.num);
+            console.log(this.letters);
+          },
+          btnClickSort() {
+            this.letters.sort();
+            console.log(this.letters);
+          },
+          btnClickReverse() {
+            this.letters.reverse();
+            console.log(this.letters);
+          },
+          //非响应式的
+          btnClickChange() {
+            this.num += 1;
+            this.letters[0] = 'J' + this.num;
+            console.log(this.letters);
+          },
+          //非响应式的解决方案
+          btnClickVueSet() {
+            this.num += 1;
+            //第一种 splice:推荐
+            this.letters.splice(0, 1, 'bbbbbb' + this.num);
+            //第二种 Vue.set:装逼用
+            Vue.set(this.letters, 0, 'bbbbbb' + this.num);
+            console.log(this.letters);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

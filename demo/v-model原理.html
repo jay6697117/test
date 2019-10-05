@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>v-model原理</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- v-model正规写法 -->
+      <input type="text" v-model="msg" />
+      <!-- 通过v-bind和v-on实现v-model -->
+      <!-- <input type="text" :value="msg" @input="changeValue($event)" /> -->
+      <!-- 这种方法就不要写一个方法了 -->
+      <!-- <input type="text" :value="msg" @input="msg = $event.target.value" /> -->
+      <h1>{{ msg }}</h1>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        //数据Model
+        data: {
+          msg: 'hello'
+        },
+        //方法
+        // methods: {
+        //   changeValue(event) {
+        //     this.msg = event.target.value;
+        //     console.log(event.target.value);
+        //   }
+        // },
+        mounted() {
+          console.log('mounted this.msg :', this.msg);
+        },
+        updated() {
+          console.log('updated this.msg :', this.msg);
+        }
+      });
+    </script>
+  </body>
+</html>

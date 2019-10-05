@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>v-model 修饰符</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <label>输入: <input type="text" v-model.lazy="msg1"/></label>
+      <div>
+        <h1>{{ msg1 }}</h1>
+      </div>
+      <hr />
+      <label>输入: <input type="number" v-model.number="msg2"/></label>
+      <div>
+        <h1>{{ msg2 }}</h1>
+        <h1>{{typeof msg2}}</h1>
+      </div>
+      <hr />
+      <label>输入: <input type="text" v-model.trim="msg3"/></label>
+      <div>
+        <h1>{{ msg3 }}</h1>
+      </div>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        //数据Model
+        data: {
+          msg1: '输入了:',
+          msg2: 0,
+          msg3: ''
+        },
+        //方法
+        methods: {},
+        mounted() {
+          console.log('mounted this.msg1 :', this.msg1, ' | ', typeof this.msg1);
+          console.log('mounted this.msg2 :', this.msg2, ' | ', typeof this.msg2);
+          console.log('mounted this.msg3 :', this.msg3, ' | ', typeof this.msg3);
+        },
+        updated() {
+          console.log('updated this.msg1 :', this.msg1, ' | ', typeof this.msg1);
+          console.log('updated this.msg2 :', this.msg2, ' | ', typeof this.msg2);
+          console.log('updated this.msg3 :', this.msg3, ' | ', typeof this.msg3);
+        }
+      });
+    </script>
+  </body>
+</html>

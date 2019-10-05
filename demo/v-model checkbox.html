@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>v-model checkbox</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- v-model正规写法 -->
+
+      <!-- checkbox单选框：案列“企业同意协议书” -->
+      <p>
+        1、标题“协议书”居中；<br />
+        2、订协议单位名称，写明订协议单位名称，并在双方单位名称之后注明一方是甲方，一方是乙方，以及甲乙双方的相关信息；<br />
+        3、正文，正文包括开头、主体两部分； （1）开头是交待签订协议的目的、原因、依据，紧接着可用程式化语言转入主体；
+        （2）主体要求就协议有关事宜作出明确的、全面的说明，尤其要着力写好协议双方的权利和义务。<br />
+        4、落款，应写明订协议双方单位的名称，并加盖公章； 5、最后写上签订协议的日期。
+      </p>
+      <label> <input type="checkbox" v-model="isAgree" />同意协议 </label>
+      <h1>你的选择是: {{ agreement }}</h1>
+      <button :disabled="!isAgree">下一步</button>
+
+      <hr />
+
+      <!-- checkbox多选框 -->
+      <label v-for="(item,index) in sports" :key="item"
+        ><input type="checkbox" :value="item" v-model="hobbies" />{{ item }}</label
+      >
+      <h1>您的爱好选择是: {{hobbies.join(' | ')}}</h1>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        //数据Model
+        data: {
+          isAgree: false,
+          agreement: '',
+          sports: ['足球', '蓝球', '排球', '棒球'],
+          hobbies: []
+        },
+        //方法
+        methods: {},
+        mounted() {
+          console.log('mounted this.isAgree :', this.isAgree);
+          console.log('mounted this.agreement :', this.agreement);
+          console.log('mounted this.hobbies :', this.hobbies);
+        },
+        updated() {
+          this.isAgree ? (this.agreement = '同意协议') : (this.agreement = '不同意协议');
+          console.log('mounted this.isAgree :', this.isAgree);
+          console.log('mounted this.agreement :', this.agreement);
+          console.log('mounted this.hobbies :', this.hobbies);
+        }
+      });
+    </script>
+  </body>
+</html>

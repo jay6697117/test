@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>模板的分离写法</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" c ontent="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- 2.1使用组件 -->
+      <cpn1></cpn1>
+      <cpn2></cpn2>
+    </div>
+
+    <template id="tpl1">
+      <div>
+        <h1>我是全局组件标题</h1>
+        <h3>我是全局组件内容哈哈哈哈哈哈哈哈</h3>
+      </div>
+    </template>
+
+    <template id="tpl2">
+      <div>
+        <h1>我是局部组件标题</h1>
+        <h3>我是局部组件内容呵呵呵呵呵呵呵呵</h3>
+      </div>
+    </template>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //1.1语法糖:注册全局组件cpn1
+      Vue.component('cpn1', {
+        template: '#tpl1'
+      });
+
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        //1.2语法糖:注册局部组件cpn2
+        components: {
+          cpn2: {
+            template: '#tpl2'
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

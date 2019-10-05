@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>v-model radio</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- v-model正规写法 -->
+      <label>
+          <input type="radio" value="男" v-model="sex">男
+      </label>
+      <label>
+          <input type="radio" value="女" v-model="sex">女
+      </label>
+      <label>
+          <input type="radio" value="人妖" v-model="sex">人妖
+      </label>
+
+      <h1>你的性别: {{ sex }}</h1>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        //数据Model
+        data: {
+          sex: '男'
+        },
+        //方法
+        methods: {},
+        mounted() {
+          console.log('mounted this.sex :', this.sex);
+        },
+        updated() {
+          console.log('updated this.sex :', this.sex);
+        }
+      });
+    </script>
+  </body>
+</html>

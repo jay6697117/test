@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>v-model 值绑定</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- v-model正规写法 -->
+      <!-- checkbox多选框 -->
+      <label v-for="(item,index) in sports" :key="item" :for="item"
+        ><input type="checkbox" :value="item" :id="item" v-model="hobbies" />{{ item }}</label
+      >
+      <h1>您的爱好选择是: {{ hobbies.join(' | ') }}</h1>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        //数据Model
+        data: {
+          sports: ['足球', '蓝球', '排球', '棒球', '羽毛球', '高尔夫', '乒乓球'],
+          hobbies: []
+        },
+        //方法
+        methods: {},
+        mounted() {
+          console.log('mounted this.hobbies :', this.hobbies);
+        },
+        updated() {
+          console.log('mounted this.hobbies :', this.hobbies);
+        }
+      });
+    </script>
+  </body>
+</html>

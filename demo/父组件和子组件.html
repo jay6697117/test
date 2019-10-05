@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>父组件和子组件</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" c ontent="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- 3.1使用组件 -->
+      <father-component></father-component>
+    </div>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //1.1创建子组件构造器
+      const childComponentConstructor = Vue.extend({
+        template: `
+        <div>
+          <h1>我是child标题</h1>
+          <h3>我是child内容哈哈哈哈哈哈哈哈</h3>
+        </div>
+        `
+      });
+
+      //1.2创建父组件构造器
+      const fatherComponentConstructor = Vue.extend({
+        template: `
+        <div>
+          <h1>我是father标题</h1>
+          <h3>我是father内容呵呵呵呵呵呵呵呵</h3>
+          <child-component></child-component>
+        </div>
+        `,
+        components: {
+          //2.1注册子局部组件
+          'child-component': childComponentConstructor
+        }
+      });
+
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        components: {
+          //2.2注册父局部组件
+          'father-component': fatherComponentConstructor
+        }
+      });
+    </script>
+  </body>
+</html>

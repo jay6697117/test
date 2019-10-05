@@ -142,11 +142,7 @@
         computed: {
           //总价
           totalPrice() {
-            let total = 0;
-            this.books.forEach(element => {
-              total += element.price * element.num;
-            });
-            return total;
+            return this.books.reduce((preVal, curBook) => preVal + curBook.price * curBook.num, 0);
           },
           //书单是否为空
           isBooksNull() {

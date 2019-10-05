@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>注册全局组件</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- 3.使用组件 -->
+      <my-component></my-component>
+      <hr />
+      <my-component></my-component>
+      <hr />
+      <my-component></my-component>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //1.创建组件构造器
+      const componentConstructor = Vue.extend({
+        template: `
+        <div>
+          <h1>我是标题</h1>
+          <h4>我是内容哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</h4>
+          <h4>我是内容啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦</h4>
+          <h1>我是底部</h1>
+        </div>
+        `
+      });
+      //2.注册全局组件
+      Vue.component('my-component', componentConstructor);
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app'
+      });
+    </script>
+  </body>
+</html>

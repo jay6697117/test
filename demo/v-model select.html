@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>v-model select</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!--  select选择一个值 -->
+      <select name="fruit" v-model="fruit">
+        <option value="">选择水果</option>
+        <option value="苹果">苹果</option>
+        <option value="香蕉">香蕉</option>
+        <option value="榴莲">榴莲</option>
+        <option value="橘子">橘子</option>
+        <option value="葡萄">葡萄</option>
+      </select>
+      <h1>您选择水果是: {{ fruit }}</h1>
+      <hr />
+      <select name="fruit" v-model="fruits" multiple style="width: 60px;height: 100px;">
+        <option value="苹果">苹果</option>
+        <option value="香蕉">香蕉</option>
+        <option value="榴莲">榴莲</option>
+        <option value="橘子">橘子</option>
+        <option value="葡萄">葡萄</option>
+      </select>
+      <h1>您选择水果是: {{ fruits.join(' | ') }}</h1>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        //数据Model
+        data: {
+          fruit: '',
+          fruits: []
+        },
+        //方法
+        methods: {},
+        mounted() {
+          console.log('mounted this.fruit :', this.fruit);
+          console.log('mounted this.fruits :', this.fruits);
+        },
+        updated() {
+          console.log('updated this.fruit :', this.fruit);
+          console.log('updated this.fruits :', this.fruits);
+        }
+      });
+    </script>
+  </body>
+</html>

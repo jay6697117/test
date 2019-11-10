@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>组件数据的存放和data在组件中必须是一个函数</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" c ontent="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- 2.使用组件:创建三个组件实例 -->
+      <cpn1></cpn1>
+      <cpn1></cpn1>
+      <cpn1></cpn1>
+    </div>
+
+    <template id="tpl1">
+      <div style="padding: 5px 10px;margin-bottom: 5px;vertical-align: middle;font-size: 20px;">
+        <div>当前计数:{{ num }}</div>
+        <button @click="sub()" style="border: 1px solid #000;border-radius: 50%;vertical-align: middle;outline: none;">
+          -
+        </button>
+        <span style="vertical-align: middle;">{{ num }}</span>
+        <button @click="add()" style="border: 1px solid #000;border-radius: 50%;vertical-align: middle;outline: none;">
+          +
+        </button>
+      </div>
+    </template>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        data: {
+          msg: '我真的是标题呢！'
+        },
+        //1.语法糖:注册局部组件cpn1
+        components: {
+          cpn1: {
+            template: '#tpl1',
+            data() {
+              return { num: 0 };
+            },
+            methods: {
+              sub() {
+                this.num--;
+                console.log('this :', this);
+              },
+              add() {
+                this.num++;
+                console.log('this :', this);
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

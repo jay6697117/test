@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>自定义事件练习</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+      #category {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      #category button {
+        border: none;
+        outline: none;
+        border: 1px solid #ccc;
+        font-size: 30px;
+        padding: 10px 20px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 使用子组件 -->
+    <div id="app" v-cloak>
+      <child-cpn @add_cpn="getTotal($event)" @sub_cpn="getTotal($event)"></child-cpn>
+      <h1>总计:{{ total }}</h1>
+    </div>
+    <!-- 子组件模版 -->
+    <template id="childCpn">
+      <div>
+        <div id="category">
+          <button @click="add_cpn">+</button>
+          <button @click="sub_cpn">-</button>
+        </div>
+      </div>
+    </template>
+
+    <!-- js脚本 -->
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      // root组件
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          total: 0
+        },
+        methods: {
+          getTotal(counter) {
+            console.log('$event :', counter);
+            this.total = counter;
+          }
+        },
+        components: {
+          //创建子组件
+          'child-cpn': {
+            template: '#childCpn',
+            data: function() {
+              return { counter: 0 };
+            },
+            methods: {
+              add_cpn() {
+                this.counter += 1;
+                this.$emit('add_cpn', this.counter);
+                console.log('this.counter :', this.counter);
+              },
+              sub_cpn() {
+                this.counter -= 1;
+                this.$emit('sub_cpn', this.counter);
+                console.log('this.counter :', this.counter);
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

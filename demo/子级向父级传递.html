@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>子级向父级传递</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+      #category {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      #category > button {
+        padding: 10px 30px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 使用子组件 -->
+    <div id="app" v-cloak>
+      <child-cpn @btn_click="cpnClick($event)"></child-cpn>
+      <h1>子组件传给父组件的信息:{{ info }}</h1>
+    </div>
+
+    <!-- 子组件模版 -->
+    <template id="childCpn">
+      <div id="category">
+        <button v-for="item in categories" :key="item.id" @click="btnClick(item)">{{ item.name }}</button>
+      </div>
+    </template>
+
+    <!-- js脚本 -->
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      // root组件
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          info: ''
+        },
+        methods: {
+          cpnClick(event) {
+            console.log('id : ' + event.id + ' | ' + 'name : ' + event.name); //测试
+            this.info = 'id : ' + event.id + ' | ' + 'name : ' + event.name;
+          }
+        },
+        components: {
+          //创建子组件
+          'child-cpn': {
+            template: '#childCpn',
+            data: function() {
+              return {
+                categories: [
+                  { id: 1, name: '数码产品' },
+                  { id: 2, name: '蔬菜生鲜' },
+                  { id: 3, name: '衣服鞋帽' },
+                  { id: 4, name: '书籍音像' }
+                ]
+              };
+            },
+            methods: {
+              btnClick(param) {
+                //发射事件
+                this.$emit('btn_click', param);
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>父子组件的通信</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- View -->
+    <div id="app" v-cloak>
+      <!-- 2.1使用组件 -->
+      <child-component :child_cartoons="cartoons" :child_list="list"></child-component>
+      <!-- <child-component></child-component> -->
+    </div>
+
+    <template id="child_cpn">
+      <div>
+        <!-- <h1>{{ child_list }}</h1> -->
+        <h1>{{ child_list.msg }}</h1>
+        <ul>
+          <li v-for="item in child_cartoons" :key="item">{{ item }}</li>
+        </ul>
+      </div>
+    </template>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //ViewModel
+      const vm = new Vue({
+        //挂载实例作用域
+        el: '#app',
+        data: {
+          list: { msg: '动画列表:' },
+          cartoons: ['海贼王', '舒克贝塔', '猫和老鼠', '圣斗士']
+        },
+        components: {
+          //1.1注册局部子组件
+          'child-component': {
+            template: '#child_cpn',
+            props: {
+              child_cartoons: {
+                type: Array,
+                default: function() {
+                  return ['暂无动画'];
+                }
+                // required: true
+              },
+              child_list: {
+                type: Object,
+                default: function() {
+                  return { msg: '暂无动画列表:' };
+                }
+                // required: true
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

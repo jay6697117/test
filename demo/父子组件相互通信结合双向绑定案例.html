@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>父子组件相互通信结合双向绑定watch方案</title>
+    <title>父子组件相互通信结合双向绑定案例</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -30,16 +30,16 @@
       <div>
         <h1>子组件props1: {{ cpn_number1 }}</h1>
         <h1>子组件data1: {{ childNumber1 }}</h1>
-        <input type="text" v-model="childNumber1" />
+        <input type="text" :value="childNumber1" @input="cpnNumber1Change($event)" />
         <hr />
         <h1>子组件props2: {{ cpn_number2 }}</h1>
         <h1>子组件data2: {{ childNumber2 }}</h1>
-        <input type="text" v-model="childNumber2" />
+        <input type="text" :value="childNumber2" @input="cpnNumber2Change($event)" />
       </div>
     </template>
 
     <!-- js脚本 -->
-    <script src="./lib/vue/dist/vue.js"></script>
+    <script src="../lib/vue/dist/vue.js"></script>
     <script>
       // root组件
       const vm = new Vue({
@@ -49,13 +49,11 @@
           number2: 2
         },
         methods: {
-          number1Change(event) {
-            console.log('number1Change newValue :', event);
-            this.number1 = parseFloat(event);
+          number1Change(item) {
+            this.number1 = item;
           },
-          number2Change(event) {
-            console.log('number2Change event :', event);
-            this.number2 = parseFloat(event);
+          number2Change(item) {
+            this.number2 = item;
           }
         },
         components: {
@@ -78,18 +76,26 @@
                 required: true
               }
             },
-            watch: {
-              childNumber1(newValue) {
-                // 完成相应的数据计算操作
-                this.childNumber2 = newValue * 10;
-                //再次发射对应事件更新父组件数据，就等于更新子组件的props数据
-                this.$emit('cpn_number1_change', newValue);
-              },
-              childNumber2(newValue) {
+            methods: {
+              cpnNumber1Change(event) {
+                //转数据类型:input默认是字符串
+                this.childNumber1 = parseFloat(event.target.value);
+                //发射事件更新父组件数据，就等于更新子组件的props数据
+                this.$emit('cpn_number1_change', this.childNumber1);
                 //完成相应的数据计算操作
-                this.childNumber1 = newValue / 10;
+                this.childNumber2 = this.childNumber1 * 10;
                 //再次发射对应事件更新父组件数据，就等于更新子组件的props数据
-                this.$emit('cpn_number2_change', newValue);
+                this.$emit('cpn_number2_change', this.childNumber2);
+              },
+              cpnNumber2Change(event) {
+                //转数据类型:input默认是字符串
+                this.childNumber2 = parseFloat(event.target.value);
+                //发射事件更新父组件数据，就等于更新子组件的props数据
+                this.$emit('cpn_number2_change', this.childNumber2);
+                //完成相应的数据计算操作
+                this.childNumber1 = this.childNumber2 / 10;
+                //再次发射对应事件更新父组件数据，就等于更新子组件的props数据
+                this.$emit('cpn_number1_change', this.childNumber1);
               }
             }
           }

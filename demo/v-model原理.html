@@ -19,9 +19,9 @@
     <!-- View -->
     <div id="app" v-cloak>
       <!-- v-model正规写法 -->
-      <input type="text" v-model="msg" />
+      <!-- <input type="text" v-model="msg" /> -->
       <!-- 通过v-bind和v-on实现v-model -->
-      <!-- <input type="text" :value="msg" @input="changeValue($event)" /> -->
+      <input type="text" :value="msg" @input="changeValue($event)" />
       <!-- 这种方法就不要写一个方法了 -->
       <!-- <input type="text" :value="msg" @input="msg = $event.target.value" /> -->
       <h1>{{ msg }}</h1>
@@ -37,12 +37,13 @@
           msg: 'hello'
         },
         //方法
-        // methods: {
-        //   changeValue(event) {
-        //     this.msg = event.target.value;
-        //     console.log(event.target.value);
-        //   }
-        // },
+        methods: {
+          changeValue(event) {
+            this.msg = event.target.value;
+            console.log('$event :', event);
+            console.log('event.target.value :', event.target.value);
+          }
+        },
         mounted() {
           console.log('mounted this.msg :', this.msg);
         },

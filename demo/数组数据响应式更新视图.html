@@ -83,7 +83,7 @@
           btnClickVueSet() {
             this.num += 1;
             //第一种 splice:推荐
-            this.letters.splice(0, 1, 'bbbbbb' + this.num);
+            // this.letters.splice(0, 1, 'bbbbbb' + this.num);
             //第二种 Vue.set:装逼用
             Vue.set(this.letters, 0, 'bbbbbb' + this.num);
             console.log(this.letters);

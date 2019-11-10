@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>组件通信驼峰标识问题</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 使用子组件 -->
+    <div id="app" v-cloak>
+      <child-cpn :child-info="rootInfo"></child-cpn>
+      <!--
+      类似CSS属性名:
+      //连字符写法
+      font-size
+      //小驼峰写法
+      fontSize
+      //连字符写法
+      child-info
+      //小驼峰写法
+      childInfo
+      -->
+    </div>
+
+    <!-- 子组件模版 -->
+    <template id="childCpn">
+      <div>
+        <h1>姓名: {{ childInfo.name }}</h1>
+        <h1>年龄: {{ childInfo.age }}</h1>
+        <h1>身高: {{ childInfo.height }}</h1>
+      </div>
+    </template>
+
+    <!-- js脚本 -->
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      // root组件
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          rootInfo: {
+            name: '张金辉',
+            age: 31,
+            height: 185
+          }
+        },
+        components: {
+          //创建子组件
+          'child-cpn': {
+            template: '#childCpn',
+            props: {
+              childInfo: {
+                type: Object,
+                default: function() {
+                  return {};
+                },
+                required: true
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

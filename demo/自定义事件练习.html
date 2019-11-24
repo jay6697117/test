@@ -56,16 +56,16 @@
           total: 0
         },
         methods: {
-          getTotal(counter) {
-            console.log('$event :', counter);
-            this.total = counter;
+          getTotal(event) {
+            console.log('event :', event);
+            this.total = event;
           }
         },
         components: {
           //创建子组件
           'child-cpn': {
             template: '#childCpn',
-            data: function() {
+            data() {
               return { counter: 0 };
             },
             methods: {

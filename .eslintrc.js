@@ -147,7 +147,7 @@ module.exports = {
     yoda: [2, 'never'],
     'prefer-const': 0, //关闭规则 prefer-const(开发时建议打开)
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'object-curly-spacing': [2, 'always', { objectsInObjects: false }],
+    'object-curly-spacing': [0, 'always', { objectsInObjects: false }], //关闭规则(建议研究)
     'array-bracket-spacing': [2, 'never']
   }
 };

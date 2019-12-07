@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>prop传值v-bind问题</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edg,chrome=1" />
+    <style>
+      /*  遮盖防止出现Mustache */
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <cmpt-local prop_msg="[1,2,3]"></cmpt-local>
+      <cmpt-local :prop_msg="[1,2,3]"></cmpt-local>
+    </div>
+    <!-- 子组件模版 -->
+    <template id="tpl">
+      <div>
+        <div @click="print">点击打印</div>
+        <h1>prop_msg值为: {{prop_msg}}</h1>
+        <h1>prop_msg数据类型为: {{typeof prop_msg}}</h1>
+      </div>
+    </template>
+    <!-- js脚本 -->
+    <script src="./lib/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {},
+        components: {
+          'cmpt-local': {
+            template: '#tpl',
+            data() {
+              return {
+                info: this.msg
+              };
+            },
+            props: { prop_msg: { required: true } },
+            methods: {
+              print() {
+                this.info = this.prop_msg;
+                console.log(this.info, this.info.length, typeof this.info);
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

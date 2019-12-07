@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>v-model父子相传-004</title>
+    <title>v-model父子相传-002</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -14,34 +14,41 @@
 
   <body>
     <div id="app" v-cloak>
-      <p>父组件message: {{message}}</p>
-      <cmpt-local></cmpt-local>
+      <p>父组件total: {{total}}</p>
+      <cmpt-local v-model="total"></cmpt-local>
     </div>
+
     <template id="tpl">
-      <div>输入触发事件: <input type="text" @input="handelEvent" /></div>
+      <div>
+        <p>子组件count: {{count}}</p>
+        <button @click="add">+</button>
+        <button @click="sub">-</button>
+      </div>
     </template>
     <script src="./lib/vue/dist/vue.js"></script>
     <script>
-      //中央主线
-      const bus = new Vue();
       const vm = new Vue({
         el: '#app',
         data: {
-          message: ''
+          total: 0
         },
-        mounted() {
-          const _this = this;
-          bus.$on('busEvent', function(busMsg) {
-            _this.message = busMsg;
-          });
-        },
-        //子组件
+        methods: {},
         components: {
           'cmpt-local': {
             template: '#tpl',
+            data() {
+              return {
+                count: 0
+              };
+            },
             methods: {
-              handelEvent(e) {
-                bus.$emit('busEvent', e.target.value);
+              add() {
+                this.count += 1;
+                this.$emit('input', this.count);
+              },
+              sub() {
+                this.count -= 1;
+                this.$emit('input', this.count);
               }
             }
           }

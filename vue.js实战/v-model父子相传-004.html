@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>v-model父子相传-004</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app" v-cloak>
+      <p>父组件total: {{total}}</p>
+      <cmpt-local v-model="total"></cmpt-local>
+      <button @click="add">+</button>
+      <button @click="sub">-</button>
+    </div>
+
+    <template id="tpl">
+      <div>
+        <p>子组件count: {{updatedcount}}</p>
+        <input type="number" :value="value" @input="updateValue" />
+      </div>
+    </template>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          total: 0
+        },
+        methods: {
+          add() {
+            this.total += 1;
+          },
+          sub() {
+            this.total -= 1;
+          }
+        },
+        //子组件
+        components: {
+          'cmpt-local': {
+            template: '#tpl',
+            data() {
+              return {
+                count: 0
+              };
+            },
+            props: ['value'],
+            computed: {
+              updatedcount() {
+                this.count = this.value;
+                return this.count;
+              }
+            },
+            methods: {
+              updateValue(e) {
+                this.count = Number(e.target.value);
+                this.$emit('input', this.count);
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

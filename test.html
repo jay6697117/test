@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>作用域插槽</title>
+    <title>匿名Slot和具名Slot</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -9,38 +9,26 @@
       [v-cloak] {
         display: none !important;
       }
+      #app > div {
+        width: 200px;
+        height: 200px;
+        background-color: #ccc;
+      }
     </style>
   </head>
   <body>
     <div id="app" v-cloak>
-      <component-son>
-        <template slot-scope="props">
-          <div slot="head">{{props}}</div>
-        </template>
-      </component-son>
+      <div :style="{backgroundImage:`url(${imgUrl})`}"></div>
     </div>
-
     <template id="tpl">
-      <div id="div001">
-        <slot :msg_prop="msg">我是默认具名 slot header 内容</slot>
-      </div>
+      <div></div>
     </template>
-
     <script src="./lib/vue/dist/vue.js"></script>
     <script>
       const vm = new Vue({
         el: '#app',
-        data: {},
-        //子组件
-        components: {
-          'component-son': {
-            template: '#tpl',
-            data() {
-              return {
-                msg: '哈哈哈哈哈111'
-              };
-            }
-          }
+        data: {
+          imgUrl: 'http://static.wdmcake.cn/data/afficheimg/1574985629856413010.jpg'
         }
       });
     </script>

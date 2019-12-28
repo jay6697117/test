@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>匿名Slot和具名Slot002</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <component-son>
+        <div>-----------------------</div>
+        <div>匿名 slot before header</div>
+        <div slot="header">我是具名slot name header</div>
+        <div slot="main">
+          <div>具名slot name main分发内容</div>
+          <div>具名slot name main更多分发内容</div>
+        </div>
+        <div>匿名 slot 分发内容</div>
+        <div>匿名 slot 更多分发内容</div>
+        <div slot="footer">我是具名slot name footer</div>
+        <div>匿名 slot after footer</div>
+        <div>-----------------------</div>
+      </component-son>
+    </div>
+
+    <template id="tpl">
+      <div>
+        <h1><slot name="header">我是默认具名slot header</slot></h1>
+        <h3><slot name="main">我是默认具名slot main</slot></h3>
+        <!-- <h4><slot>我是默认匿名slot</slot></h4> -->
+        <!-- 如果没有指定默认的匿名slot, 父组件内多余的内容片段都将被抛弃 -->
+        <h1><slot name="footer">我是默认具名slot footer</slot></h1>
+      </div>
+    </template>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {},
+        //子组件
+        components: {
+          'component-son': {
+            template: '#tpl',
+            data() {
+              return {};
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

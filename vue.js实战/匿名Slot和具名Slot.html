@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>作用域插槽</title>
+    <title>匿名Slot和具名Slot</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -14,19 +14,31 @@
   <body>
     <div id="app" v-cloak>
       <component-son>
-        <template slot-scope="props">
-          <div slot="head">{{props}}</div>
-        </template>
+        <h3>before header</h3>
+        <div slot="header">
+          <h1>我是header</h1>
+        </div>
+        <!-- <div slot="main">
+          <p>分发内容</p>
+          <p>更多分发内容</p>
+        </div> -->
+        <p>分发内容</p>
+        <p>更多分发内容</p>
+        <div slot="footer">
+          <h1>我是footer</h1>
+        </div>
+        <h3>after footer</h3>
       </component-son>
     </div>
-
     <template id="tpl">
-      <div id="div001">
-        <slot :msg_prop="msg">我是默认具名 slot header 内容</slot>
+      <div>
+        <slot name="header">我是默认header</slot>
+        <!-- <slot name="main">我是默认main</slot> -->
+        <slot>我是默认main</slot>
+        <slot name="footer">我是默认footer</slot>
       </div>
     </template>
-
-    <script src="./lib/vue/dist/vue.js"></script>
+    <script src="../lib/vue/dist/vue.js"></script>
     <script>
       const vm = new Vue({
         el: '#app',
@@ -36,9 +48,7 @@
           'component-son': {
             template: '#tpl',
             data() {
-              return {
-                msg: '哈哈哈哈哈111'
-              };
+              return {};
             }
           }
         }

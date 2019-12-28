@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>作用域插槽002</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <component-son :prop_books="books">
+        <template slot="book" slot-scope="props">
+          <li>书名: {{props.book_name}}&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;{{props.book_price}} 元</li>
+          <p>slot-scope props: {{props}}</p>
+        </template>
+      </component-son>
+    </div>
+
+    <template id="tpl">
+      <div>
+        <ul>
+          <slot name="book" v-for="(item,index) in prop_books" :book_name="item.name" :book_price="item.price"></slot>
+        </ul>
+      </div>
+    </template>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          books: [
+            { id: 1, name: '算法导论', date: '2019-01', price: 85.0, num: 1 },
+            { id: 2, name: 'UNIX编程艺术', date: '2018-05', price: 68.0, num: 1 },
+            { id: 3, name: '编程珠玑', date: '2017-03', price: 49.0, num: 1 },
+            { id: 4, name: '代码大全', date: '2018-12', price: 98.0, num: 1 }
+          ]
+        },
+        //子组件
+        components: {
+          'component-son': {
+            template: '#tpl',
+            data() {
+              return {};
+            },
+            props: {
+              prop_books: {
+                type: Array,
+                default: function() {
+                  return [];
+                }
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

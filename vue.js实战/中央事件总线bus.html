@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>中央事件总线bus</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app" v-cloak>
+      <p>父组件message: {{message}}</p>
+      <cmpt-local></cmpt-local>
+    </div>
+    <template id="tpl">
+      <div>输入触发事件: <input type="text" @input="handelEvent" /></div>
+    </template>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      //中央主线
+      const bus = new Vue();
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          message: ''
+        },
+        mounted() {
+          const _this = this;
+          bus.$on('busEvent', function(busMsg) {
+            console.log('监听到bus的事件busEvent');
+            _this.message = busMsg;
+          });
+        },
+        //子组件
+        components: {
+          'cmpt-local': {
+            template: '#tpl',
+            methods: {
+              handelEvent(e) {
+                bus.$emit('busEvent', e.target.value);
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

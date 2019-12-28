@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>匿名Slot和具名Slot 001</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <component-son>
+        <h4>
+          <div>-----------------------</div>
+          <div>匿名 slot before header</div>
+        </h4>
+        <div slot="header">
+          <h1>我是具名slot name header</h1>
+        </div>
+        <div slot="main">
+          <p>具名slot name main分发内容</p>
+          <p>具名slot name main更多分发内容</p>
+        </div>
+        <p>匿名 slot 分发内容</p>
+        <p>匿名 slot 更多分发内容</p>
+        <div slot="footer">
+          <h1>我是具名slot name footer</h1>
+        </div>
+        <h4>
+          <div>匿名 slot after footer</div>
+          <div>-----------------------</div>
+        </h4>
+      </component-son>
+    </div>
+
+    <template id="tpl">
+      <div>
+        <slot>我是默认匿名slot</slot>
+        <slot name="header">我是默认具名slot header</slot>
+        <slot name="main">我是默认具名slot main</slot>
+        <slot name="footer">我是默认具名slot footer</slot>
+      </div>
+    </template>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {},
+        //子组件
+        components: {
+          'component-son': {
+            template: '#tpl',
+            data() {
+              return {};
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

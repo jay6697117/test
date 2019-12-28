@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>作用域插槽</title>
+    <title>作用域插槽001</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -15,29 +15,30 @@
     <div id="app" v-cloak>
       <component-son>
         <template slot-scope="props">
-          <div slot="head">{{props}}</div>
+          <h1>{{msgFa}}</h1>
+          <h2>{{props.msg}}</h2>
         </template>
       </component-son>
     </div>
-
     <template id="tpl">
-      <div id="div001">
-        <slot :msg_prop="msg">我是默认具名 slot header 内容</slot>
+      <div>
+        <slot :msg="msgSon"></slot>
       </div>
     </template>
-
-    <script src="./lib/vue/dist/vue.js"></script>
+    <script src="../lib/vue/dist/vue.js"></script>
     <script>
       const vm = new Vue({
         el: '#app',
-        data: {},
+        data: {
+          msgFa: '父组件本身的内容'
+        },
         //子组件
         components: {
           'component-son': {
             template: '#tpl',
             data() {
               return {
-                msg: '哈哈哈哈哈111'
+                msgSon: '来自子组件的内容'
               };
             }
           }

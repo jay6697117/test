@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>作用域插槽</title>
+    <title>父链003</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -11,34 +11,36 @@
       }
     </style>
   </head>
+
   <body>
     <div id="app" v-cloak>
-      <component-son>
-        <template slot-scope="props">
-          <div slot="head">{{props}}</div>
-        </template>
-      </component-son>
+      <p>父组件msgFa: {{msgFa}}</p>
+      <cmpt-son></cmpt-son>
     </div>
-
     <template id="tpl">
-      <div id="div001">
-        <slot :msg_prop="msg">我是默认具名 slot header 内容</slot>
+      <div>
+        <label>输入: <input type="text" v-model.lazy="msgSon" placeholder="输入内容"/></label>
+        <p>子组件msgSon: {{msgSon}}</p>
       </div>
     </template>
-
     <script src="./lib/vue/dist/vue.js"></script>
     <script>
       const vm = new Vue({
         el: '#app',
-        data: {},
+        data: {
+          msgFa: ''
+        },
         //子组件
         components: {
-          'component-son': {
+          'cmpt-son': {
             template: '#tpl',
             data() {
               return {
-                msg: '哈哈哈哈哈111'
+                msgSon: ''
               };
+            },
+            updated() {
+              this.$parent.msgFa = this.msgSon;
             }
           }
         }

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>$refs子组件索引</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <p>父组件msgFa: {{msgFa}}</p>
+      <button @click="handelEvent">点击获取子组件</button>
+      <p ref="pTag">p标签测试ref用法</p>
+      <hr />
+      <cmpt-son ref="cmptSon"></cmpt-son>
+    </div>
+    <template id="tpl">
+      <div>
+        <div ref="divTag">div标签测试ref用法</div>
+        <h1>{{msgSon}}</h1>
+      </div>
+    </template>
+    <script src="./lib/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msgFa: ''
+        },
+        methods: {
+          handelEvent() {
+            console.log('this.$refs :', this.$refs);
+            console.log('this.$refs.pTag :', this.$refs.pTag);
+            console.log('this.$refs.divTag :', this.$refs.divTag);
+            console.log('this.$refs.cmptSon :', this.$refs.cmptSon);
+            this.msgFa = this.$refs.cmptSon.msgSon;
+            this.$refs.pTag.innerHTML = '<div>HELLO</div>';
+          }
+        },
+        //子组件
+        components: {
+          'cmpt-son': {
+            template: '#tpl',
+            data() {
+              return {
+                msgSon: '我是子组件msgSon'
+              };
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

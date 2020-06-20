@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>7.5.3 动态组件</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app" v-cloak>
+      <component :is="currentComponent"></component>
+      <button @click="changeComponent('A')">切换子组件A</button>
+      <button @click="changeComponent('B')">切换子组件B</button>
+      <button @click="changeComponent('C')">切换子组件C</button>
+    </div>
+
+    <template id="tplA">
+      <div>
+        <h1 style="color:red;">我是子组件child-componentA</h1>
+      </div>
+    </template>
+
+    <template id="tplB">
+      <div>
+        <h2 style="color:green;">我是子组件child-componentB</h2>
+      </div>
+    </template>
+
+    <template id="tplC">
+      <div>
+        <h3 style="color:blue;">我是子组件child-componentC</h3>
+      </div>
+    </template>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          currentComponent: {
+            template: `<h3 style="color:blueviolet;">也可以直接绑定在组件对象上</h3>`
+          }
+        },
+        methods: {
+          changeComponent: function(componentName) {
+            console.log('componentName:', componentName);
+            this.currentComponent = 'child-component' + componentName;
+          }
+        },
+        //子组件
+        components: {
+          'child-componentA': {
+            template: '#tplA'
+          },
+          'child-componentB': {
+            template: '#tplB'
+          },
+          'child-componentC': {
+            template: '#tplC'
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

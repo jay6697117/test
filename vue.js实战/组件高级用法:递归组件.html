@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>组件高级用法:递归组件</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <child-component :prop_count="count_parent"></child-component>
+    </div>
+
+    <template id="tpl">
+      <div class="child1">
+        <h1>{{count_child}}</h1>
+        <child-component :prop_count="addResult" v-if="count_child<=2"></child-component>
+      </div>
+    </template>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          count_parent: 1
+        },
+        //子组件
+        components: {
+          'child-component': {
+            name: 'child-component',
+            template: '#tpl',
+            data: function() {
+              return {
+                count_child: this.prop_count
+              };
+            },
+            //props属性
+            props: {
+              prop_count: {
+                type: Number,
+                default: 1
+              }
+            },
+            //计算属性
+            computed: {
+              addResult: function() {
+                return this.count_child + 1;
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

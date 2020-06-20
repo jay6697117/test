@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>组件高级用法:内联模版</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <child-component :prop_count="count_parent" inline-template>
+        <div id="child_component_element">
+          <h1 style="color:red;">count_child:{{count_child}}</h1>
+          <h2 style="color:blue;">prop_count:{{prop_count}}</h2>
+        </div>
+      </child-component>
+      <h3 style="color:green;">count_parent:{{count_parent}}</h3>
+    </div>
+
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          count_parent: 111
+        },
+        //子组件
+        components: {
+          'child-component': {
+            data: function() {
+              return {
+                count_child: this.prop_count
+              };
+            },
+            //props属性
+            props: {
+              prop_count: {
+                type: Number,
+                default: 1
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

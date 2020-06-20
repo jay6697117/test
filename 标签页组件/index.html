@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>标签页组件</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <div id="app" v-cloak>
+    </div>
+    <script src="../lib/vue/dist/vue.js"></script>
+    <script src="./pane.js"></script>
+    <script src="./tabs.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app'
+      });
+    </script>
+  </body>
+</html>

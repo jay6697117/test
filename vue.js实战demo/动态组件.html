@@ -22,19 +22,19 @@
 
     <template id="tplA">
       <div>
-        <h1 style="color:red;">我是子组件child-componentA</h1>
+        <h1 style="color: red;">我是子组件child-componentA</h1>
       </div>
     </template>
 
     <template id="tplB">
       <div>
-        <h2 style="color:green;">我是子组件child-componentB</h2>
+        <h2 style="color: green;">我是子组件child-componentB</h2>
       </div>
     </template>
 
     <template id="tplC">
       <div>
-        <h3 style="color:blue;">我是子组件child-componentC</h3>
+        <h3 style="color: blue;">我是子组件child-componentC</h3>
       </div>
     </template>
 
@@ -48,7 +48,7 @@
           }
         },
         methods: {
-          changeComponent: function(componentName) {
+          changeComponent: function (componentName) {
             console.log('componentName:', componentName);
             this.currentComponent = 'child-component' + componentName;
           }

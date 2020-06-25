@@ -25,7 +25,7 @@
       //Vue组件构造器
       const ChildComponent = Vue.extend({
         template: `<div id="child_dom"><h1>Hello <span style="color:red;">{{msg}}</span></h1></div>`,
-        data: function() {
+        data: function () {
           return {
             msg: 'vmChild'
           };
@@ -35,7 +35,7 @@
       //实例化1
       const vmParent = new ChildComponent({
         el: '#parentApp',
-        data() {
+        data () {
           return {
             msg: 'vmParent'
           };

@@ -29,14 +29,14 @@
           foo: () => {
             console.log('methods箭头 :', this); //window
           },
-          foo1: function() {
+          foo1: function () {
             console.log('methods匿名 :', this); //vue实例
           },
-          foo2: function foo2() {
+          foo2: function foo2 () {
             console.log('methods具名 :', this); //vue实例
           }
         },
-        mounted: function() {
+        mounted: function () {
           console.log('mounted :', this); //vue实例
 
           const foo = () => {
@@ -44,12 +44,12 @@
           };
           foo();
 
-          const foo1 = function() {
+          const foo1 = function () {
             console.log('mounted匿名 :', this); //window
           };
           foo1();
 
-          function foo2() {
+          function foo2 () {
             console.log('mounted具名 :', this); //window
           }
           foo2();

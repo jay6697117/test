@@ -33,7 +33,7 @@
           msgFa: ''
         },
         methods: {
-          handelEvent() {
+          handelEvent () {
             console.log('this.$refs :', this.$refs);
             console.log('this.$refs.pTag :', this.$refs.pTag);
             console.log('this.$refs.divTag :', this.$refs.divTag);
@@ -46,7 +46,7 @@
         components: {
           'cmpt-son': {
             template: '#tpl',
-            data() {
+            data () {
               return {
                 msgSon: '我是子组件msgSon'
               };

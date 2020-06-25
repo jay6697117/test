@@ -40,41 +40,61 @@
       <table>
         <thead>
           <tr>
-            <th style="padding:10px">
+            <th style="padding: 10px;">
               ID\类目
             </th>
             <th>书籍名称</th>
             <th>出版日期</th>
             <th>价格</th>
             <th>购买数量</th>
-            <th style="padding:10px 20px">操作</th>
+            <th style="padding: 10px 20px;">操作</th>
           </tr>
         </thead>
         <tbody v-if="!isBooksNull">
           <tr v-for="(item,index) in books">
-            <td style="padding:10px">{{ item.id }}</td>
+            <td style="padding: 10px;">{{ item.id }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.date }}</td>
             <td>{{ item.price | finalPrice }}</td>
             <td style="vertical-align: middle;">
               <button
-                style="padding:3px 8px;border-radius: 50%;background-color: #eee;border: 1px solid #aaa;outline: none;vertical-align: middle;"
+                style="
+                  padding: 3px 8px;
+                  border-radius: 50%;
+                  background-color: #eee;
+                  border: 1px solid #aaa;
+                  outline: none;
+                  vertical-align: middle;
+                "
                 :disabled="isBtnAbled(index)"
                 @click="sub(index)"
               >
                 -
               </button>
-              <span style="vertical-align: middle;padding: 0.5px 2px;">{{ item.num }}</span>
+              <span style="vertical-align: middle; padding: 0.5px 2px;">{{ item.num }}</span>
               <button
-                style="padding:3px 6px;border-radius: 50%;background-color: #eee;border: 1px solid #aaa;outline: none;vertical-align: middle;"
+                style="
+                  padding: 3px 6px;
+                  border-radius: 50%;
+                  background-color: #eee;
+                  border: 1px solid #aaa;
+                  outline: none;
+                  vertical-align: middle;
+                "
                 @click="add(index)"
               >
                 +
               </button>
             </td>
-            <td style="padding:10px 20px">
+            <td style="padding: 10px 20px;">
               <button
-                style="padding:2px 5px;border-radius: 5px;background-color: #eee;border: 1px solid #aaa;outline: none;"
+                style="
+                  padding: 2px 5px;
+                  border-radius: 5px;
+                  background-color: #eee;
+                  border: 1px solid #aaa;
+                  outline: none;
+                "
                 @click="removeItem(index)"
               >
                 移除
@@ -112,15 +132,15 @@
         //方法
         methods: {
           //减
-          sub(thisIndex) {
+          sub (thisIndex) {
             this.books[thisIndex].num -= 1;
           },
           //加
-          add(thisIndex) {
+          add (thisIndex) {
             this.books[thisIndex].num += 1;
           },
           //启用/禁用button
-          isBtnAbled(thisIndex) {
+          isBtnAbled (thisIndex) {
             if (this.books[thisIndex].num > 1) {
               return false;
             } else {
@@ -128,24 +148,24 @@
             }
           },
           //操作移除书单item
-          removeItem(thisIndex) {
+          removeItem (thisIndex) {
             this.books.splice(thisIndex, 1);
           }
         },
         //可以复用过滤器:把数字价格过滤成带人民币格式
         filters: {
-          finalPrice(param) {
+          finalPrice (param) {
             return '¥' + param.toFixed(2);
           }
         },
         //计算属性
         computed: {
           //总价
-          totalPrice() {
+          totalPrice () {
             return this.books.reduce((preVal, curBook) => preVal + curBook.price * curBook.num, 0);
           },
           //书单是否为空
-          isBooksNull() {
+          isBooksNull () {
             if (this.books.length === 0) {
               return true;
             } else {

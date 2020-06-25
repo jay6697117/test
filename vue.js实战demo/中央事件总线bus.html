@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>作用域插槽001</title>
+    <title>中央事件总线bus</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -11,35 +11,39 @@
       }
     </style>
   </head>
+
   <body>
     <div id="app" v-cloak>
-      <component-son>
-        <template slot-scope="props">
-          <h1>{{msgFa}}</h1>
-          <h2>{{props.msg}}</h2>
-        </template>
-      </component-son>
+      <p>父组件message: {{message}}</p>
+      <cmpt-local></cmpt-local>
     </div>
     <template id="tpl">
-      <div>
-        <slot :msg="msgSon"></slot>
-      </div>
+      <div>输入触发事件: <input type="text" @input="handelEvent" /></div>
     </template>
     <script src="../lib/vue/dist/vue.js"></script>
     <script>
+      //中央主线
+      const bus = new Vue();
       const vm = new Vue({
         el: '#app',
         data: {
-          msgFa: '父组件本身的内容'
+          message: ''
+        },
+        mounted () {
+          const _this = this;
+          bus.$on('busEvent', function (busMsg) {
+            console.log('监听到bus的事件busEvent');
+            _this.message = busMsg;
+          });
         },
         //子组件
         components: {
-          'component-son': {
+          'cmpt-local': {
             template: '#tpl',
-            data() {
-              return {
-                msgSon: '来自子组件的内容'
-              };
+            methods: {
+              handelEvent (e) {
+                bus.$emit('busEvent', e.target.value);
+              }
             }
           }
         }

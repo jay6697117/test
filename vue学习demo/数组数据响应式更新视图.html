@@ -42,45 +42,45 @@
         },
         methods: {
           //响应式的
-          btnClickPush() {
+          btnClickPush () {
             this.num += 1;
             this.letters.push('F' + this.num, 'G' + this.num);
             console.log(this.letters);
           },
-          btnClickUnshift() {
+          btnClickUnshift () {
             this.num += 1;
             this.letters.unshift('H' + this.num, 'I' + this.num);
             console.log(this.letters);
           },
-          btnClickPop() {
+          btnClickPop () {
             this.letters.pop();
             console.log(this.letters);
           },
-          btnClickShift() {
+          btnClickShift () {
             this.letters.shift();
             console.log(this.letters);
           },
-          btnClickSplice() {
+          btnClickSplice () {
             this.num += 1;
             this.letters.splice(0, 1, 'E' + this.num);
             console.log(this.letters);
           },
-          btnClickSort() {
+          btnClickSort () {
             this.letters.sort();
             console.log(this.letters);
           },
-          btnClickReverse() {
+          btnClickReverse () {
             this.letters.reverse();
             console.log(this.letters);
           },
           //非响应式的
-          btnClickChange() {
+          btnClickChange () {
             this.num += 1;
             this.letters[0] = 'J' + this.num;
             console.log(this.letters);
           },
           //非响应式的解决方案
-          btnClickVueSet() {
+          btnClickVueSet () {
             this.num += 1;
             //第一种 splice:推荐
             // this.letters.splice(0, 1, 'bbbbbb' + this.num);

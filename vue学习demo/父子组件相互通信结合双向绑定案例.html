@@ -49,10 +49,10 @@
           number2: 2
         },
         methods: {
-          number1Change(item) {
+          number1Change (item) {
             this.number1 = item;
           },
-          number2Change(item) {
+          number2Change (item) {
             this.number2 = item;
           }
         },
@@ -60,7 +60,7 @@
           //创建子组件
           'child-cpn': {
             template: '#childCpn',
-            data() {
+            data () {
               return {
                 childNumber1: this.cpn_number1,
                 childNumber2: this.cpn_number2
@@ -77,7 +77,7 @@
               }
             },
             methods: {
-              cpnNumber1Change(event) {
+              cpnNumber1Change (event) {
                 //转数据类型:input默认是字符串
                 this.childNumber1 = parseFloat(event.target.value);
                 //发射事件更新父组件数据，就等于更新子组件的props数据
@@ -87,7 +87,7 @@
                 //再次发射对应事件更新父组件数据，就等于更新子组件的props数据
                 this.$emit('cpn_number2_change', this.childNumber2);
               },
-              cpnNumber2Change(event) {
+              cpnNumber2Change (event) {
                 //转数据类型:input默认是字符串
                 this.childNumber2 = parseFloat(event.target.value);
                 //发射事件更新父组件数据，就等于更新子组件的props数据
